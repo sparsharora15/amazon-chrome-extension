@@ -45,16 +45,40 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 let automationStopped = false;
+let automationRunning = false;
+
+// Auto-resume automation after page navigation or bfcache restore
+window.addEventListener("pageshow", () => {
+  try {
+    const progress = JSON.parse(
+      localStorage.getItem("automationProgress") || "{}"
+    );
+    if (
+      progress.step &&
+      progress.step !== "completion" &&
+      !progress.stopped &&
+      !automationRunning
+    ) {
+      console.log("🔄 Auto-resuming automation from step:", progress.step);
+      automationRunning = true;
+      setTimeout(() => startAutomation(), 1000);
+    }
+  } catch (error) {
+    console.error("Error during auto-resume check:", error);
+  }
+});
 
 // Listen for page navigation
 window.addEventListener("beforeunload", () => {
   console.log("Page navigation detected");
+  automationRunning = false;
 });
 
 // Stop automation flag
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "stopAutomation") {
     automationStopped = true;
+    automationRunning = false;
 
     // Save stopped state
     try {
@@ -119,7 +143,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
-function startAutomation() {
+async function startAutomation() {
+  if (automationRunning) {
+    console.log("⚠️ Automation already running");
+    return;
+  }
+  automationRunning = true;
   console.log("🚀 Content script automation started!");
   console.log("Current URL:", window.location.href);
 
@@ -834,5 +863,6 @@ function startAutomation() {
     }
   }
 
-  runSteps();
+  await runSteps();
+  automationRunning = false;
 }
