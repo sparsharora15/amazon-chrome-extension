@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Auto Product Lister",
+  "version": "1.0",
+  "description": "Automates product listing on seller panel.",
+  "permissions": ["scripting", "activeTab"],
+  "host_permissions": ["https://sellercentral.amazon.in/*"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "logo/img.png",
+      "48": "logo/img.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://sellercentral.amazon.in/*"],
+      "js": ["content.js"]
+    }
+  ]
+}

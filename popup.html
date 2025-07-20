@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Auto Product Lister</title>
+    <style>
+      body { 
+        width: 300px; 
+        padding: 15px; 
+        font-family: Arial, sans-serif; 
+      }
+      button { 
+        width: 100%; 
+        padding: 10px; 
+        margin: 5px 0; 
+        border: none; 
+        border-radius: 5px; 
+        cursor: pointer; 
+        font-weight: bold;
+      }
+      #run { 
+        background: #4CAF50; 
+        color: white; 
+      }
+      #stop { 
+        background: #f44336; 
+        color: white; 
+      }
+      #clearProgress { 
+        background: #ff9800; 
+        color: white; 
+        font-size: 12px;
+        padding: 8px;
+      }
+      #viewProgress { 
+        background: #2196F3; 
+        color: white; 
+        font-size: 12px;
+        padding: 8px;
+      }
+      .progress-info {
+        background: #f5f5f5;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        font-size: 12px;
+        display: none;
+      }
+      .step-indicator {
+        background: #e0e0e0;
+        padding: 5px;
+        margin: 2px 0;
+        border-radius: 3px;
+        font-size: 11px;
+      }
+      .step-completed {
+        background: #c8e6c9;
+        color: #2e7d32;
+      }
+      .step-current {
+        background: #ffecb3;
+        color: #f57f17;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>Auto Product Lister</h3>
+    
+    <button id="run">🚀 Start Automation</button>
+    <button id="stop">⏹️ Stop Automation</button>
+    
+    <div style="margin: 15px 0; border-top: 1px solid #ddd; padding-top: 15px;">
+      <button id="viewProgress">📋 View Progress</button>
+      <button id="clearProgress">🗑️ Clear Progress</button>
+    </div>
+    
+    <div id="progressInfo" class="progress-info">
+      <div id="currentStep"></div>
+      <div id="stepsList"></div>
+      <div id="lastUpdate"></div>
+    </div>
+    
+    <script src="popup.js"></script>
+  </body>
+</html>
